@@ -2,7 +2,7 @@
 CSC3916 HW2
 Jeremy Gage
 File: Server.js
-Description: Web API scaffolding for Movie API
+Description: Web API for Movie API
  */
 
 var express = require('express');
@@ -97,7 +97,7 @@ router.route('/testcollection')
 
 //implement movie route
 router.route('/movies')
-    .get(authController.isAuthenticated, function(req, res) {
+    .get(authJWTController.isAuthenticated, function(req, res) {
         console.log(req.body);
         res = res.status(200);
         if (req.get('Content-Type')) {
