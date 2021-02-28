@@ -1,12 +1,12 @@
 var passport = require('passport');
 var BasicStrategy = require('passport-http').BasicStrategy;
-db = require('./db')();
+db = require('./db')(); //hack
 
 passport.use(new BasicStrategy(
    function(username, password, done) {
        //var user = { name: "cu_user"}; //could have called to a database to look this up
-       var user = db.findOne(req.body.username);
-       if (username === user.name && password === password) // triple equal is type and value; double == is just equal
+       let user = db.findOne(username);
+       if (username === user.username && password === user.password) // triple equal is type and value; double == is just equal
        {
            return done(null, user);
        }
