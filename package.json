@@ -4,7 +4,8 @@
   "description": "Web API 3916 Homework 2",
   "main": "server.js",
   "scripts": {
-    "test": "mocha --timeout 10000 --exit"
+    "test": "mocha --timeout 10000 --exit",
+    "start": "node server.js"
   },
   "repository": {
     "type": "git",
@@ -35,5 +36,8 @@
     "chai": "^4.3.0",
     "chai-http": "^4.3.0",
     "mocha": "^8.3.0"
+  },
+  "directories": {
+    "test": "test"
   }
 }

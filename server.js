@@ -1,5 +1,6 @@
 /*
 CSC3916 HW2
+Jeremy Gage
 File: Server.js
 Description: Web API scaffolding for Movie API
  */
@@ -93,6 +94,19 @@ router.route('/testcollection')
         res.json(o);
     }
     );
+
+//implement movie route
+router.route('/movies')
+    .get(authController.isAuthenticated, function(req, res) {
+        console.log(req.body);
+        res = res.status(200);
+        if (req.get('Content-Type')) {
+            res = res.type(req.get('Content-Type'));
+        }
+        var o = getJSONObjectForMovieRequirement(req);
+        res.json(o);
+
+});
 
 app.use('/', router);
 app.listen(process.env.PORT || 8080);
