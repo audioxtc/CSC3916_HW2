@@ -74,7 +74,7 @@ router.post('/signin', function (req, res) {
 });
 
 router.route('/testcollection')
-    .delete(authController.isAuthenticated, function(req, res) {
+    .delete(authJwtController.isAuthenticated, function(req, res) {
         console.log(req.body);
         res = res.status(200);
         if (req.get('Content-Type')) {
