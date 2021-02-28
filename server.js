@@ -97,7 +97,7 @@ router.route('/testcollection')
 
 //implement movie route
 router.route('/movies')
-    .get(authController.isAuthenticated, function(req, res) {
+    .get(authJWTController.isAuthenticated, function(req, res) {
         console.log(req.body);
         res = res.status(200);
         if (req.get('Content-Type')) {
