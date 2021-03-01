@@ -42,7 +42,8 @@ function getJSONObjectForMovieRequirement(req) {
     return json;
 }
 
-router.post('/signup', function(req, res) {
+router.route('/signup')
+    .post( function(req, res) {
     if (!req.body.username || !req.body.password) {
         res.json({success: false, msg: 'Please include both username and password to signup.'})
     } else {
@@ -54,9 +55,13 @@ router.post('/signup', function(req, res) {
         db.save(newUser); //no duplicate checking
         res.json({success: true, msg: 'Successfully created new user.'})
     }
-});
+}).all(function (req, res){
+    res.status(405).send({success: false, msg: 'HTTP method not implemented.'})
+    }
+);
 
-router.post('/signin', function (req, res) {
+router.route('/signin')
+    .post(function (req, res) {
     var user = db.findOne(req.body.username);
 
     if (!user) {
@@ -71,7 +76,11 @@ router.post('/signin', function (req, res) {
             res.status(401).send({success: false, msg: 'Authentication failed.'});
         }
     }
-});
+}
+).all(function (req, res){
+        res.status(405).send({success: false, msg: 'HTTP method not implemented.'})
+    }
+);
 
 router.route('/testcollection')
     .delete(authController.isAuthenticated, function(req, res) {
@@ -81,6 +90,7 @@ router.route('/testcollection')
             res = res.type(req.get('Content-Type'));
         }
         var o = getJSONObjectForMovieRequirement(req);
+        o.body={msg:"movie deleted."}
         res.json(o);
     }
     )
@@ -91,6 +101,7 @@ router.route('/testcollection')
             res = res.type(req.get('Content-Type'));
         }
         var o = getJSONObjectForMovieRequirement(req);
+            o.body={msg:"movie updated."}
         res.json(o);
     }
     );
@@ -104,12 +115,46 @@ router.route('/movies')
             res = res.type(req.get('Content-Type'));
         }
         var o = getJSONObjectForMovieRequirement(req);
+
         res.json(o);
 
-});
+}).put(authJwtController.isAuthenticated, function(req, res) {
+        console.log(req.body);
+        res = res.status(200);
+        if (req.get('Content-Type')) {
+            res = res.type(req.get('Content-Type'));
+        }
+        var o = getJSONObjectForMovieRequirement(req);
+        o.body={msg:"movie saved."}
+        res.json(o);
+    }
+).delete(authController.isAuthenticated, function(req, res) {
+        console.log(req.body);
+        res = res.status(200);
+        if (req.get('Content-Type')) {
+            res = res.type(req.get('Content-Type'));
+        }
+        var o = getJSONObjectForMovieRequirement(req);
+        o.body={msg:"movie deleted."}
+        res.json(o);
+    }
+).post(authJwtController.isAuthenticated, function(req, res) {
+        console.log(req.body);
+        res = res.status(200);
+        if (req.get('Content-Type')) {
+            res = res.type(req.get('Content-Type'));
+        }
+        var o = getJSONObjectForMovieRequirement(req);
+        res.json(o);
+    }
+).all(function (req, res){
+        res.status(405).send({success: false, msg: 'HTTP method not implemented.'})
+    }
+);
 
 app.use('/', router);
 app.listen(process.env.PORT || 8080);
 module.exports = app; // for testing only
+
 
 
