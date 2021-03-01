@@ -82,6 +82,7 @@ router.route('/signin')
     }
 );
 
+/*
 router.route('/testcollection')
     .delete(authController.isAuthenticated, function(req, res) {
         console.log(req.body);
@@ -105,6 +106,7 @@ router.route('/testcollection')
         res.json(o);
     }
     );
+*/
 
 //implement movie route
 router.route('/movies')
@@ -115,7 +117,7 @@ router.route('/movies')
             res = res.type(req.get('Content-Type'));
         }
         var o = getJSONObjectForMovieRequirement(req);
-
+        o.body={msg:"GET movies."}
         res.json(o);
 
 }).put(authJwtController.isAuthenticated, function(req, res) {
@@ -125,7 +127,7 @@ router.route('/movies')
             res = res.type(req.get('Content-Type'));
         }
         var o = getJSONObjectForMovieRequirement(req);
-        o.body={msg:"movie saved."}
+        o.body={msg:"movie updated."}
         res.json(o);
     }
 ).delete(authController.isAuthenticated, function(req, res) {
@@ -135,6 +137,7 @@ router.route('/movies')
             res = res.type(req.get('Content-Type'));
         }
         var o = getJSONObjectForMovieRequirement(req);
+
         o.body={msg:"movie deleted."}
         res.json(o);
     }
@@ -145,6 +148,7 @@ router.route('/movies')
             res = res.type(req.get('Content-Type'));
         }
         var o = getJSONObjectForMovieRequirement(req);
+        o.body={msg:"movie saved."}
         res.json(o);
     }
 ).all(function (req, res){
